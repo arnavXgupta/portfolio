@@ -3,15 +3,15 @@ import type { ResumeData } from "@/lib/types";
 export const RESUME_DATA: ResumeData = {
   name: "Arnav Gupta",
   initials: "AG",
-  location: "Patiala, Punjab",
+  location: "Bathinda, Punjab",
   locationLink: "https://www.google.com/maps/place/Patiala,+Punjab",
   about: "Bachelor of Engineering in Computer Science with a focus on AI/ML and full-stack development.",
   summary: (
     <>
-      As a Computer Science student at Thapar Institute of Engineering and Technology, I have hands-on experience in full-stack web development, AI-driven projects, and application development. I have led teams in extracurricular activities, delivering projects that significantly increased user engagement. I am proficient in multiple programming languages and modern development frameworks.
+      As a Final year Computer Science student at Thapar Institute of Engineering and Technology, I have hands-on experience in full-stack web development, AI-driven projects, and application development. I have led teams in extracurricular activities, delivering projects that significantly increased user engagement. I am proficient in multiple programming languages and modern development frameworks.
     </>
   ),
-  avatarUrl: "https://avatars.githubusercontent.com/u/1017620?v=4",
+  avatarUrl: "https://www.putlink.com",
   personalWebsiteUrl: "https://www.putlink.com",
   contact: {
     email: "arnav090404@gmail.com",
@@ -36,12 +36,24 @@ export const RESUME_DATA: ResumeData = {
       start: "2022",
       end: "2026",
     },
+    {
+      school: "Sudesh Vatika Convent School",
+      degree: "12th Grade",
+      start: "2021",
+      end: "2022",
+    },
+    {
+      school: "St. Joseph Sen. Sec. School",
+      degree: "10th Grade",
+      start: "2019",
+      end: "2020",
+    },
   ],
   work: [
     {
       company: "Varnan",
-      link: "https://www.putlink.com",
-      badges: ["Remote", "Next.js", "Tailwind CSS", "Sanity CMS"],
+      link: "https://varnan.tech",
+      badges: ["Next.js", "Tailwind CSS", "Sanity CMS", "RSS"],
       title: "Freelance Web Developer",
       start: "May 2025",
       end: "July 2025",
@@ -62,27 +74,31 @@ export const RESUME_DATA: ResumeData = {
       ),
     },
     {
-      company: "Microsoft Learn Student Chapter",
-      link: "https://www.putlink.com",
-      badges: ["TIET"],
-      title: "Coordinator",
-      start: "Apr 2023",
-      end: "Jun 2024",
+      company: "NiveshX",
+      link: "https://github.com/arnavXgupta/",
+      badges: ["React.js", "Firebase", "UI/UX"],
+      title: "Frontend Developer & UI/UX Designer",
+      start: "May 2024",
+      end: "July 2024",
       description: (
         <>
-          Led a team of 10 in designing and launching the official society website and the Makeathon 6 event portal, driving a 150% increase in user engagement and significantly enhancing online visibility.
+          <ul className="list-inside list-disc">
+            <li>
+              Spearheaded the development of a comprehensive financial management platform, enhancing user experience and engagement through intuitive UI/UX design and seamless integration with Firebase for real-time data handling.
+            </li>
+          </ul>
         </>
       ),
     },
     {
       company: "Chemical Department, TIET",
-      link: "https://www.putlink.com",
-      badges: ["TIET"],
+      link: "https://sdcee2024.thapar.edu/",
+      badges: ["HTML/CSS", "Javascript", "Figma"],
       title: "UI/UX Design Head",
       start: "Oct 2023",
       end: "Feb 2024",
       description:
-        "Designed the UI/UX for the International Conference on Sustainable Development in Chemical Engineering, attracting over 10,000+ global users and enhancing participant interaction and engagement.",
+        "Designed the Frontend for the International Conference on Sustainable Development in Chemical Engineering, attracting over 10,000+ global users and enhancing participant interaction and engagement.",
     },
   ],
   skills: [
@@ -113,7 +129,7 @@ export const RESUME_DATA: ResumeData = {
         "Led the development of a desktop application to streamline inefficient tailor shop operations, reducing order processing time by 30% and improving customer delivery accuracy by 25%.",
       link: {
         label: "github.com",
-        href: "https://www.putlink.com",
+        href: "https://github.com/arnavXgupta/TailorMate",
       },
     },
     {
@@ -123,7 +139,7 @@ export const RESUME_DATA: ResumeData = {
         "Developed a scalable, production-ready RAG API capable of handling concurrent queries by leveraging a fully asynchronous architecture for parallelized retrieval and generation tasks.",
       link: {
         label: "github.com",
-        href: "https://www.putlink.com",
+        href: "https://github.com/arnavXgupta/Bajaj-RAG",
       },
     },
     {
@@ -133,7 +149,7 @@ export const RESUME_DATA: ResumeData = {
         "Partnered with a team of 4 on developing the AI-driven software pipeline for a drone-assisted pothole detection and mapping system, aiming to significantly reduce municipal costs and improve infrastructure management.",
       link: {
         label: "github.com",
-        href: "https://www.putlink.com",
+        href: "https://github.com/arnavXgupta/",
       },
     },
   ],
