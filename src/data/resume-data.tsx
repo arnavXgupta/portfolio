@@ -12,10 +12,10 @@ export const RESUME_DATA: ResumeData = {
     </>
   ),
   avatarUrl: "https://www.putlink.com",
-  personalWebsiteUrl: "https://www.putlink.com",
+  personalWebsiteUrl: "https://arnavxgupta.vercel.app/",
   contact: {
     email: "arnav090404@gmail.com",
-    tel: "7986294705",
+    tel: "+917986294705",
     social: [
       {
         name: "GitHub",
@@ -107,17 +107,23 @@ export const RESUME_DATA: ResumeData = {
     "C++",
     "JavaScript",
     "SQL",
+    "HTML/CSS",
+    "Tailwind CSS",
     "React.js",
     "Next.js",
     "Node.js",
     "Spring Boot",
     "FastAPI",
-    "Tailwind CSS",
-    "LangChain",
-    "PyTorch",
-    "LLMs",
+    "Firebase",
     "MySQL",
     "MongoDB",
+    "Pinecone",
+    "RSS",
+    "Sanity CMS",
+    "LangChain",
+    "PyTorch",
+    "OpenAI",
+    "Gemini",
     "Git",
     "GitHub",
   ],
@@ -130,6 +136,16 @@ export const RESUME_DATA: ResumeData = {
       link: {
         label: "github.com",
         href: "https://github.com/arnavXgupta/TailorMate",
+      },
+    },
+    {
+      title: "AI-Powered Resume Builder",
+      techStack: ["React.js", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
+      description:
+        "Developed an AI-powered resume builder that streamlines the resume creation process by leveraging natural language processing and machine learning algorithms.",
+      link: {
+        label: "github.com",
+        href: "https://github.com/arnavXgupta/AI-Powered-Resume-Builder",
       },
     },
     {
