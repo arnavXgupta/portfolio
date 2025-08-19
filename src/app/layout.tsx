@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 
 import "./globals.css";
 import type React from "react";
@@ -13,7 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://cv.jarocki.me"),
+  metadataBase: new URL("https://arnavxgupta.vercel.app/"),
   title: {
     default: `${RESUME_DATA.name} - ${RESUME_DATA.about}`,
     template: `%s | ${RESUME_DATA.name}`,
@@ -57,12 +58,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  twitter: {
-    card: "summary_large_image",
-    title: `${RESUME_DATA.name} - ${RESUME_DATA.about}`,
-    description: RESUME_DATA.about,
-    creator: "@BartoszJarocki",
-  },
   alternates: {
     canonical: RESUME_DATA.personalWebsiteUrl,
   },
@@ -85,6 +80,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
+      <head>
+        {/* Google Analytics */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=G-560BJFGF6F`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga-script" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-560BJFGF6F', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
+      </head>
       <body>
         <ErrorBoundary>{children}</ErrorBoundary>
       </body>
