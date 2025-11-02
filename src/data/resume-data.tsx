@@ -3,7 +3,7 @@ import type { ResumeData } from "@/lib/types";
 export const RESUME_DATA: ResumeData = {
   name: "Arnav Gupta",
   initials: "AG",
-  location: "Bathinda, Punjab",
+  location: "Patiala, Punjab",
   locationLink: "https://www.google.com/maps/place/Patiala,+Punjab",
   about: "Bachelor of Engineering in Computer Science with a focus on AI/ML and full-stack development.",
   summary: (
@@ -38,13 +38,13 @@ export const RESUME_DATA: ResumeData = {
     },
     {
       school: "Sudesh Vatika Convent School",
-      degree: "12th Grade",
+      degree: "12th Grade - 78%",
       start: "2021",
       end: "2022",
     },
     {
       school: "St. Joseph Sen. Sec. School",
-      degree: "10th Grade",
+      degree: "10th Grade - 91.2%",
       start: "2019",
       end: "2020",
     },
@@ -61,7 +61,7 @@ export const RESUME_DATA: ResumeData = {
     },
     {
       company: "NiveshX",
-      link: "https://github.com/arnavXgupta/",
+      link: "https://github.com/arnavXgupta/NiveshBuddy_Frontend",
       badges: ["React.js", "Firebase", "UI/UX"],
       title: "Frontend Developer & UI/UX Designer",
       start: "May 2024",
@@ -85,28 +85,45 @@ export const RESUME_DATA: ResumeData = {
     "Python",
     "C++",
     "JavaScript",
-    "SQL",
-    "HTML/CSS",
-    "Tailwind CSS",
-    "React.js",
+    "TypeScript",
     "Next.js",
-    "Node.js",
-    "Spring Boot",
+    "React.js",
+    "Tailwind CSS",
     "FastAPI",
+    "Node.js",
     "Firebase",
     "MySQL",
     "MongoDB",
     "Pinecone",
-    "RSS",
+    "Firebase",
     "Sanity CMS",
     "LangChain",
-    "PyTorch",
     "OpenAI",
     "Gemini",
     "Git",
     "GitHub",
   ],
   projects: [
+    {
+      title: "Cognivia",
+      techStack: ["React.js", "Tailwind CSS", "FastAPI", "Llama", "Pinecone", "MongoDB", "Gemini"],
+      description:
+        "Cognivia is an AI-powered study co-pilot that allows users to upload PDFs and YouTube videos to generate notes, create study plans, and chat directly with their learning materials.",
+      link: {
+        label: "github.com",
+        href: "https://github.com/arnavXgupta/Cognivia",
+      },
+    },
+    {
+      title: "Atelier Hub",
+      techStack: ["React.js", "Tailwind CSS", "FastAPI", "LangChain", "Pinecone"],
+      description:
+        "Ikarus Atelier is an AI-powered, full-stack furniture recommendation app that uses conversational search and generative AI to provide personalized suggestions and create unique product descriptions.",
+      link: {
+        label: "github.com",
+        href: "https://ikarus-3s4a.vercel.app/",
+      },
+    },
     {
       title: "TailorMate",
       techStack: ["Java", "Object Oriented Programming", "JavaFX", "Scene Builder", "MySQL", "Maven"],
@@ -124,7 +141,17 @@ export const RESUME_DATA: ResumeData = {
         "This project is a high-performance, scalable Retrieval-Augmented Generation (RAG) pipeline designed to answer questions about complex documents provided via a URL.",
       link: {
         label: "github.com",
-        href: "https://github.com/arnavXgupta/Bajaj-RAG",
+        href: "https://github.com/arnavXgupta/DocuPrism-RAG/",
+      },
+    },
+    {
+      title: "Arula Landing Page",
+      techStack: ["Next.js", "Tailwind CSS", "Vercel"],
+      description:
+        "Arula is a responsive, single-page website built with Next.js and Tailwind CSS, featuring multiple sections like a hero, stats, FAQs, and a contact form.",
+      link: {
+        label: "github.com",
+        href: "https://arula-asgn.vercel.app/",
       },
     },
     {
@@ -152,7 +179,7 @@ export const RESUME_DATA: ResumeData = {
       "description": "A comprehensive stock analysis tool that provides real-time data, interactive visualizations, and key financial metrics for any publicly traded company in the US. It analyses based on the indicators: SMA, EMA, MACD, Stochastic Oscillators, Boillinger Bands and RSI",
       "link": {
         "label": "github.com",
-        "href": "httpsT://github.com/arnavxgupta/stock-analysis"
+        "href": "https://github.com/arnavxgupta/stock-analysis"
       }
     },
     {
