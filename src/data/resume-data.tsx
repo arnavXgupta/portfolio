@@ -11,7 +11,7 @@ export const RESUME_DATA: ResumeData = {
       As a Final year Computer Science student at Thapar Institute of Engineering and Technology, I have hands-on experience in full-stack web development, AI-driven projects, and application development. I have led teams in extracurricular activities, delivering projects that significantly increased user engagement. I am proficient in multiple programming languages and modern development frameworks.
     </>
   ),
-  avatarUrl: "https://www.putlink.com",
+  avatarUrl: "https://res.cloudinary.com/dnrxsykwg/image/upload/v1762158828/me_cqxizl.jpg",
   personalWebsiteUrl: "https://arnavxgupta.vercel.app/",
   contact: {
     email: "arnav090404@gmail.com",
@@ -32,7 +32,7 @@ export const RESUME_DATA: ResumeData = {
   education: [
     {
       school: "Thapar Institute of Engineering and Technology",
-      degree: "Bachelor of Engineering in Computer Science",
+      degree: "Bachelor of Engineering in Computer Science - CGPA:7.00",
       start: "2022",
       end: "2026",
     },
@@ -97,11 +97,18 @@ export const RESUME_DATA: ResumeData = {
     "Pinecone",
     "Firebase",
     "Sanity CMS",
+    "GenAI",
     "LangChain",
     "OpenAI",
     "Gemini",
     "Git",
     "GitHub",
+  ],
+  domains: [
+    "Frontend Development",
+    "Backend Development",
+    "Full-Stack Development",
+    "AI/ML Integration",
   ],
   projects: [
     {

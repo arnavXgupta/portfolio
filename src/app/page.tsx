@@ -11,6 +11,7 @@ import { Projects } from "./components/Projects";
 import { Skills } from "./components/Skills";
 import { Summary } from "./components/Summary";
 import { WorkExperience } from "./components/WorkExperience";
+import { Domains } from "./components/Domains";
 
 export const metadata: Metadata = {
   title: `${RESUME_DATA.name} - Resume`,
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "https://cv.jarocki.me/opengraph-image",
+        url: "https://res.cloudinary.com/dnrxsykwg/image/upload/v1762159872/opengraph-image_prd8r9.png",
         width: 1200,
         height: 630,
         alt: `${RESUME_DATA.name}'s profile picture`,
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${RESUME_DATA.name} - Resume`,
     description: RESUME_DATA.about,
-    images: ["https://cv.jarocki.me/opengraph-image"],
+    images: ["https://res.cloudinary.com/dnrxsykwg/image/upload/v1762159872/opengraph-image_prd8r9.png"],
   },
 };
 
@@ -111,6 +112,12 @@ export default function ResumePage() {
             <SectionErrorBoundary sectionName="Skills">
               <Suspense fallback={<SectionSkeleton lines={2} />}>
                 <Skills skills={RESUME_DATA.skills} />
+              </Suspense>
+            </SectionErrorBoundary>
+
+            <SectionErrorBoundary sectionName="Domains">
+              <Suspense fallback={<SectionSkeleton lines={2} />}>
+                <Domains domains={RESUME_DATA.domains} />
               </Suspense>
             </SectionErrorBoundary>
 

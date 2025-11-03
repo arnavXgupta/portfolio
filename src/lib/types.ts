@@ -38,6 +38,7 @@ export interface ResumeData {
     description: string | React.ReactNode;
   }>;
   skills: string[];
+  domains: string[];
   projects: Array<{
     title: string;
     techStack: string[];
@@ -103,6 +104,7 @@ export interface GraphQLMe {
   education: GraphQLEducation[];
   work: GraphQLWork[];
   skills: string[];
+  domains: string[];
   projects: GraphQLProject[];
 }
 
@@ -146,6 +148,7 @@ export function resumeDataToGraphQL(data: ResumeData): GraphQLMe {
       description: reactToString(job.description),
     })),
     skills: data.skills,
+    domains: data.domains,
     projects: data.projects.map((project) => ({
       title: project.title,
       techStack: project.techStack,
