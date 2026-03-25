@@ -3,8 +3,8 @@ import type { ResumeData } from "@/lib/types";
 export const RESUME_DATA: ResumeData = {
   name: "Arnav Gupta",
   initials: "AG",
-  location: "Patiala, Punjab",
-  locationLink: "https://www.google.com/maps/place/Patiala,+Punjab",
+  location: "Bathinda, Punjab",
+  locationLink: "https://www.google.com/maps/place/Bathinda,+Punjab",
   about: "Bachelor of Engineering in Computer Science with a focus on AI/ML and full-stack development.",
   summary: (
     <>
@@ -51,10 +51,19 @@ export const RESUME_DATA: ResumeData = {
   ],
   work: [
     {
+      company: "GetHelpDesk.ai",
+      link: "https://gethelpdesk.ai",
+      badges: ["FastAPI", "Claude Code", "Pipecat", "Astro.js"],
+      title: "Software Developer Intern",
+      start: "Jan 2026",
+      end: "Present",
+      description: "Contributed to an LLM-driven voice automation system for dental clinics, focusing on improving the backend call pipeline. Optimized system reliability by resolving production issues and shipping feature enhancements, while supporting client onboarding through workflow customization.",
+    },
+    {
       company: "Varnan",
       link: "https://varnan.tech",
       badges: ["Next.js", "Tailwind CSS", "Sanity CMS", "RSS"],
-      title: "Freelance Web Developer",
+      title: "Web Developer",
       start: "May 2025",
       end: "July 2025",
       description: "Led a major platform overhaul using Next.js and Tailwind CSS, integrating a custom Sanity CMS blog and an RSS feed to enhance UI/UX, boost user engagement, and expand audience reach by 30,000.",
@@ -70,7 +79,7 @@ export const RESUME_DATA: ResumeData = {
         "Spearheaded the development of a comprehensive financial management platform, enhancing user experience and engagement through intuitive UI/UX design and seamless integration with Firebase for real-time data handling.",
     },
     {
-      company: "Chemical Department, TIET",
+      company: "Department of Chemical Sciences, TIET",
       link: "https://sdcee2024.thapar.edu/",
       badges: ["HTML/CSS", "Javascript", "Figma"],
       title: "UI/UX Design Head",
@@ -81,7 +90,6 @@ export const RESUME_DATA: ResumeData = {
     },
   ],
   skills: [
-    "Java",
     "Python",
     "C++",
     "JavaScript",
@@ -91,16 +99,13 @@ export const RESUME_DATA: ResumeData = {
     "Tailwind CSS",
     "FastAPI",
     "Node.js",
-    "Firebase",
     "MySQL",
     "MongoDB",
     "Pinecone",
     "Firebase",
-    "Sanity CMS",
     "GenAI",
     "LangChain",
-    "OpenAI",
-    "Gemini",
+    "Claude Code",
     "Git",
     "GitHub",
   ],
@@ -162,40 +167,12 @@ export const RESUME_DATA: ResumeData = {
       },
     },
     {
-      "title": "IntelliMatch",
-      "techStack": ["Python", "Openai", "Gemini"],
-      "description": "IntelliMatch is an intelligent recruitment platform that automates the process of shortlisting top candidates by using AI to score and rank them based on how well their resumes match job descriptions.",
-      "link": {
-        "label": "github.com",
-        "href": "https://github.com/arnavXgupta/IntelliMatch"
-      }
-    },
-    {
-      title: "Autonomous Pothole Detection & 3D Reconstruction",
-      techStack: ["YOLO", "LiDAR", "Transformers", "ICP"],
-      description:
-        "Our capstone team of four is developing a real-time autonomous system that fuses LiDAR and RGB camera data to accurately detect and map potholes, enhancing road safety.",
-      link: {
-        label: "github.com",
-        href: "https://github.com/arnavXgupta/",
-      },
-    },
-    {
       "title": "Stock Analysis",
       "techStack": ["Python", "Pandas", "AlphaVantage", "Plotly"],
       "description": "A comprehensive stock analysis tool that provides real-time data, interactive visualizations, and key financial metrics for any publicly traded company in the US. It analyses based on the indicators: SMA, EMA, MACD, Stochastic Oscillators, Boillinger Bands and RSI",
       "link": {
         "label": "github.com",
         "href": "https://github.com/arnavxgupta/stock-analysis"
-      }
-    },
-    {
-      "title": "SmartShop AI",
-      "techStack": ["Python", "FastAPI", "OpenAI", "Pandas", "Streamlit"],
-      "description": "An AI-powered Walmart shopping assistant that provides personalized product recommendations based on user queries.",
-      "link": {
-        "label": "github.com",
-        "href": "https://github.com/arnavxgupta/smartshop-ai"
       }
     },
   ],
