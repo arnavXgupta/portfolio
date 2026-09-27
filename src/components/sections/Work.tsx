@@ -8,20 +8,20 @@ import { ProjectVisual } from "@/components/visuals/ProjectVisuals";
 import { projects, type Project } from "@/content/site";
 
 const SPANS: Record<string, { cell: string; visual: string }> = {
-  cognivia: { cell: "md:col-span-2 lg:col-span-4 lg:row-span-2", visual: "min-h-[260px] md:min-h-[340px] lg:min-h-[420px]" },
+  "urban-realities": { cell: "md:col-span-2 lg:col-span-4 lg:row-span-2", visual: "min-h-[300px] md:min-h-[340px] lg:min-h-[420px]" },
   docuprism: { cell: "lg:col-span-2", visual: "min-h-[220px]" },
   "arula-connect": { cell: "lg:col-span-2", visual: "min-h-[220px]" },
   "social-automation": { cell: "lg:col-span-3", visual: "min-h-[220px]" },
-  intellimatch: { cell: "lg:col-span-3", visual: "min-h-[220px]" },
+  cognivia: { cell: "lg:col-span-3", visual: "min-h-[220px]" },
 };
 
 // Each tile gets its own atmosphere so the grid never reads as identical cards.
 const TINTS: Record<string, string> = {
-  cognivia: "bg-[radial-gradient(90%_70%_at_70%_20%,rgb(62_224_164/0.10),transparent_60%)]",
+  "urban-realities": "bg-[radial-gradient(90%_70%_at_70%_20%,rgb(62_224_164/0.10),transparent_60%)]",
   docuprism: "bg-[linear-gradient(160deg,rgb(255_255_255/0.035),transparent_55%)]",
   "arula-connect": "bg-[radial-gradient(70%_60%_at_50%_45%,rgb(62_224_164/0.08),transparent_70%)]",
   "social-automation": "bg-[linear-gradient(90deg,transparent,rgb(62_224_164/0.06))]",
-  intellimatch: "bg-[radial-gradient(60%_80%_at_20%_50%,rgb(255_255_255/0.04),transparent_70%)]",
+  cognivia: "bg-[radial-gradient(60%_80%_at_20%_50%,rgb(62_224_164/0.07),transparent_70%)]",
 };
 
 const onSpotlight = (event: PointerEvent<HTMLElement>) => {
@@ -132,6 +132,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
               </li>
             ))}
           </ul>
+          {project.links.length === 0 && project.status ? <p className="mt-8 text-sm text-faint">{project.status}</p> : null}
           <div className="mt-8 flex flex-wrap gap-3">
             {project.links.map((link) => (
               <a key={link.href} href={link.href} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center gap-2 rounded-full bg-accent px-5 text-sm font-medium text-accent-ink transition-colors hover:bg-[#5cf0b8]">
@@ -156,7 +157,7 @@ export function Work() {
 
   return (
     <section id="work" aria-labelledby="work-title" className="mx-auto max-w-[1400px] px-5 py-24 md:px-10 md:py-32">
-      <SectionHeading id="work-title" title="Selected work." sub="Five systems I designed and built end to end. Open any of them for the details." />
+      <SectionHeading id="work-title" title="Selected work." sub="Five things I built and shipped. Open any of them for the details." />
       <div className="mt-14 grid grid-cols-1 gap-4 md:mt-20 md:grid-cols-2 lg:grid-cols-6">
         {projects.map((item, index) => (
           <div key={item.slug} className={`min-h-[360px] ${SPANS[item.slug].cell}`}>

@@ -156,6 +156,8 @@ export function Hero() {
           </motion.p>
 
           <h1 id="hero-title" className="mt-5 text-[clamp(2.35rem,5vw,4.7rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-fg">
+            <span className="sr-only">{`${hero.headline[0]} ${hero.headline[1]}`}</span>
+            <span aria-hidden="true">
             <KineticLine text={first} start={0.15} offset={0} animateIn={animateIn} reduce={reduce} />
             <span className="block">
               <KineticLine inline text={second.replace(` ${hero.accent}`, "")} start={0.15} offset={firstLength} animateIn={animateIn} reduce={reduce} />{" "}
@@ -176,6 +178,7 @@ export function Hero() {
                 />
               </svg>
               </span>
+            </span>
             </span>
           </h1>
 

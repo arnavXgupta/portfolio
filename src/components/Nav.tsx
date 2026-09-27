@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring } from "motion/react";
-import { GithubLogoIcon, LinkedinLogoIcon, ListIcon, XIcon, ArrowUpRightIcon } from "@phosphor-icons/react";
+import { GithubLogoIcon, LinkedinLogoIcon, ListIcon, XIcon, XLogoIcon, ArrowUpRightIcon } from "@phosphor-icons/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useIntro } from "./IntroProvider";
 import { createTopDockController } from "@/threeui/animated-top-dock/topDockController";
@@ -145,6 +145,9 @@ export function Nav() {
               </a>
               <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="grid size-12 place-items-center rounded-full border border-line-strong text-fg">
                 <LinkedinLogoIcon size={20} />
+              </a>
+              <a href={profile.x} target="_blank" rel="noreferrer" aria-label="X" className="grid size-12 place-items-center rounded-full border border-line-strong text-fg">
+                <XLogoIcon size={20} />
               </a>
             </div>
           </motion.div>

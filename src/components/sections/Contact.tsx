@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUpIcon, CheckIcon, CopyIcon, FilePdfIcon, GithubLogoIcon, LinkedinLogoIcon } from "@phosphor-icons/react";
+import { ArrowUpIcon, CheckIcon, CopyIcon, FilePdfIcon, GithubLogoIcon, LinkedinLogoIcon, PhoneCallIcon, WhatsappLogoIcon, XLogoIcon } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { LazyMount } from "@/components/ui/LazyMount";
 import { LiquidMetalButton } from "@/threeui/liquid-metal-button/LiquidMetalButton";
@@ -15,6 +15,8 @@ const EmeraldHorizonBackground = dynamic(() => import("@/threeui/emerald-horizon
 const SOCIALS = [
   { label: "GitHub", href: profile.github, Icon: GithubLogoIcon },
   { label: "LinkedIn", href: profile.linkedin, Icon: LinkedinLogoIcon },
+  { label: "X", href: profile.x, Icon: XLogoIcon },
+  { label: "WhatsApp", href: profile.whatsapp, Icon: WhatsappLogoIcon },
   { label: "Résumé (PDF)", href: profile.resume, Icon: FilePdfIcon },
 ];
 
@@ -94,7 +96,13 @@ export function Contact() {
             ))}
           </div>
         </Reveal>
-        <p className="mt-8 text-sm text-faint">{profile.location}</p>
+        <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+          <a href={profile.phoneHref} className="inline-flex items-center gap-2 font-mono text-fg transition-colors hover:text-accent">
+            <PhoneCallIcon size={16} className="text-accent" />
+            {profile.phone}
+          </a>
+          <span className="text-faint">{profile.location}</span>
+        </div>
 
         <div className="mt-24 md:mt-32">
           <ParticleWordmark text="ARNAV GUPTA" />
@@ -102,13 +110,6 @@ export function Contact() {
 
         <footer className="glass mt-8 flex flex-col gap-4 rounded-[20px] border border-white/10 bg-bg/75 px-5 py-4 text-sm text-fg/80 backdrop-blur-md md:flex-row md:items-center md:justify-between md:px-6">
           <p>© 2026 {profile.name}</p>
-          <p>
-            Visual components adapted from{" "}
-            <a href="https://github.com/MengTo/threeui" target="_blank" rel="noreferrer" className="text-fg underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white">
-              ThreeUI Community
-            </a>{" "}
-            (MIT)
-          </p>
           <a href="#top" className="inline-flex items-center gap-2 text-fg/80 transition-colors hover:text-fg">
             Back to top <ArrowUpIcon size={14} />
           </a>

@@ -1,3 +1,4 @@
+import { ContactDock } from "@/components/ContactDock";
 import { Loader } from "@/components/Loader";
 import { Nav } from "@/components/Nav";
 import { Archive } from "@/components/sections/Archive";
@@ -16,6 +17,7 @@ export default function Home() {
       </a>
       <Loader />
       <Nav />
+      <ContactDock />
       <main>
         <Hero />
         <LogoMarquee />

@@ -1,16 +1,15 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from "motion/react";
-import { ArrowsClockwiseIcon, FileTextIcon } from "@phosphor-icons/react";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
+import { ArrowsClockwiseIcon, BedIcon, FileTextIcon, HouseLineIcon, MapPinIcon, StorefrontIcon } from "@phosphor-icons/react";
 import { siInstagram, siX, siYoutube, type SimpleIcon } from "simple-icons";
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Project } from "@/content/site";
 import { LazyMount } from "@/components/ui/LazyMount";
 
 const RagField = dynamic(() => import("./RagField").then((m) => m.RagField), { ssr: false });
 
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 /* DocuPrism: a document is split into semantic chunks, each one becomes a vector. */
 function ChunkDoc() {
@@ -161,57 +160,104 @@ function FanOut() {
   );
 }
 
-/* IntelliMatch: a sample ATS score with matched and missing skills. */
-function MatchScore() {
+/* Urban Realities: filters narrowing a rentals feed. Sample listings, cycling PG, residential, commercial. */
+type Listing = { title: string; area: string; price: number; kind: "PG" | "Residential" | "Commercial" };
+const LISTINGS: Listing[] = [
+  { title: "PG, twin sharing", area: "Model Town", price: 4800, kind: "PG" },
+  { title: "PG, triple sharing", area: "Bibiwala Road", price: 5500, kind: "PG" },
+  { title: "PG, single room", area: "Ajit Road", price: 6500, kind: "PG" },
+  { title: "Girls PG", area: "Civil Lines", price: 7200, kind: "PG" },
+  { title: "PG with meals", area: "100 Feet Road", price: 7800, kind: "PG" },
+  { title: "1 BHK flat", area: "Power House Road", price: 9000, kind: "Residential" },
+  { title: "1 BHK, furnished", area: "Ajit Road", price: 11500, kind: "Residential" },
+  { title: "2 BHK flat", area: "100 Feet Road", price: 14000, kind: "Residential" },
+  { title: "2 BHK, furnished", area: "Civil Lines", price: 18000, kind: "Residential" },
+  { title: "3 BHK house", area: "Model Town", price: 22000, kind: "Residential" },
+  { title: "Office, first floor", area: "Power House Road", price: 16000, kind: "Commercial" },
+  { title: "Office space", area: "Bibiwala Road", price: 18000, kind: "Commercial" },
+  { title: "Shop, ground floor", area: "Mall Road", price: 25000, kind: "Commercial" },
+  { title: "Warehouse", area: "Goniana Road", price: 32000, kind: "Commercial" },
+  { title: "Showroom", area: "Ajit Road", price: 40000, kind: "Commercial" },
+];
+const FILTERS = [
+  { kind: "PG", min: 4000, max: 8000 },
+  { kind: "Residential", min: 8000, max: 25000 },
+  { kind: "Commercial", min: 15000, max: 45000 },
+] as const;
+const RANGE_MAX = 50000;
+const KIND_ICON = { PG: BedIcon, Residential: HouseLineIcon, Commercial: StorefrontIcon };
+const rupees = (value: number) => `₹${value.toLocaleString("en-IN")}`;
+
+function ListingsFilter() {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.5 });
-  const score = useMotionValue(reduce ? 82 : 0);
-  const shown = useTransform(() => Math.round(score.get()));
-  const dash = useTransform(() => `${(score.get() / 100) * 264} 264`);
-  const gradientId = `score-${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
+  const inView = useInView(ref, { amount: 0.3 });
+  const [step, setStep] = useState(0);
   useEffect(() => {
-    if (!inView || reduce) return undefined;
-    const controls = animate(score, 82, { duration: 1.8, ease: EASE, delay: 0.2 });
-    return () => controls.stop();
-  }, [inView, reduce, score]);
-  const matched = ["FastAPI", "Docker", "PostgreSQL", "React"];
-  const missing = ["Kubernetes", "GraphQL"];
+    if (reduce || !inView) return undefined;
+    const timer = window.setInterval(() => setStep((value) => (value + 1) % FILTERS.length), 2800);
+    return () => window.clearInterval(timer);
+  }, [reduce, inView]);
+  const filter = FILTERS[step];
+  const results = LISTINGS.filter((item) => item.kind === filter.kind && item.price >= filter.min && item.price <= filter.max).slice(0, 6);
+  const low = (filter.min / RANGE_MAX) * 100;
+  const high = (filter.max / RANGE_MAX) * 100;
+  const spring = { type: "spring" as const, bounce: 0.18, duration: 0.7 };
+
   return (
-    <div ref={ref} className="absolute inset-0 flex items-center justify-center gap-6 p-6" aria-hidden="true">
-      <div className="relative size-[112px] shrink-0">
-        <svg viewBox="0 0 100 100" className="size-full -rotate-90">
-          <defs>
-            <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#3ee0a4" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#3ee0a4" />
-            </linearGradient>
-          </defs>
-          <circle cx="50" cy="50" r="42" fill="none" stroke="rgb(255 255 255 / 0.08)" strokeWidth="7" />
-          <motion.circle cx="50" cy="50" r="42" fill="none" stroke={`url(#${gradientId})`} strokeWidth="7" strokeLinecap="round" style={{ strokeDasharray: dash }} />
-        </svg>
-        <div className="absolute inset-0 grid place-items-center text-center">
-          <div>
-            <motion.p className="font-mono text-3xl font-medium tracking-[-0.04em] text-fg">{shown}</motion.p>
-            <p className="font-mono text-[10px] text-faint">sample</p>
+    <div ref={ref} className="absolute inset-0 flex flex-col gap-3 overflow-hidden p-4 sm:p-5 lg:gap-4 lg:p-7" aria-hidden="true">
+      <div className="flex shrink-0 flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-raised px-4 py-3">
+        <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-faint">
+          <MapPinIcon size={12} /> Bathinda
+        </span>
+        <div className="flex gap-1.5">
+          {FILTERS.map((option) => (
+            <span key={option.kind} className="relative rounded-full px-3 py-1 text-[11px]">
+              {option.kind === filter.kind ? <motion.span layoutId="listing-chip" className="absolute inset-0 rounded-full bg-accent" transition={spring} /> : <span className="absolute inset-0 rounded-full border border-line" />}
+              <span className={`relative transition-colors duration-300 ${option.kind === filter.kind ? "text-accent-ink" : "text-muted"}`}>{option.kind}</span>
+            </span>
+          ))}
+        </div>
+        <div className="min-w-[150px] flex-1">
+          <div className="flex justify-between font-mono text-[10px] text-muted">
+            <span>{rupees(filter.min)}</span>
+            <span>{rupees(filter.max)}</span>
+          </div>
+          <div className="relative mt-2 h-1 rounded-full bg-white/[0.08]">
+            <motion.span className="absolute inset-y-0 rounded-full bg-accent" initial={false} animate={{ left: `${low}%`, right: `${100 - high}%` }} transition={spring} />
+            {[low, high].map((value, index) => (
+              <motion.span key={index} className="absolute top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-accent bg-bg" initial={false} animate={{ left: `${value}%` }} transition={spring} />
+            ))}
           </div>
         </div>
+        <span className="hidden font-mono text-[10px] text-faint lg:inline">
+          <span className="text-fg">{results.length}</span> listings, sample data
+        </span>
       </div>
-      <div className="grid gap-2">
-        <div className="flex flex-wrap gap-1.5">
-          {matched.map((skill) => (
-            <span key={skill} className="rounded-full bg-accent-soft px-2.5 py-1 font-mono text-[10px] text-accent">
-              {skill}
-            </span>
-          ))}
-        </div>
-        <div className="flex flex-wrap gap-1.5">
-          {missing.map((skill) => (
-            <span key={skill} className="rounded-full border border-dashed border-line-strong px-2.5 py-1 font-mono text-[10px] text-faint">
-              {skill}
-            </span>
-          ))}
-        </div>
+      <div className="grid min-h-0 flex-1 grid-cols-2 content-start gap-2.5 sm:grid-cols-3 lg:grid-rows-2 lg:content-stretch lg:gap-3">
+        <AnimatePresence mode="popLayout" initial={false}>
+          {results.map((item, index) => {
+            const Icon = KIND_ICON[item.kind];
+            return (
+              <motion.div
+                key={item.title + item.area}
+                layout
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ ...spring, delay: index * 0.04 }}
+                className={`flex flex-col rounded-xl border border-line bg-raised p-2.5 lg:p-3 ${index > 1 ? "max-sm:hidden" : ""}`}
+              >
+                <div className="grid h-11 place-items-center rounded-lg bg-[linear-gradient(135deg,rgb(62_224_164/0.18),rgb(255_255_255/0.03))] text-accent lg:h-auto lg:min-h-[4.5rem] lg:flex-1">
+                  <Icon size={20} />
+                </div>
+                <p className="mt-2 truncate text-[12px] font-medium text-fg">{item.title}</p>
+                <p className="truncate text-[10px] text-faint">{item.area}</p>
+                <p className="mt-1 font-mono text-[11px] text-accent">{rupees(item.price)}/mo</p>
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
       </div>
     </div>
   );
@@ -231,7 +277,7 @@ export function ProjectVisual({ kind }: { kind: Project["visual"] }) {
       return <RoleNetwork />;
     case "fanout":
       return <FanOut />;
-    case "match":
-      return <MatchScore />;
+    case "listings":
+      return <ListingsFilter />;
   }
 }

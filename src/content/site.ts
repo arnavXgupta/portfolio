@@ -7,6 +7,11 @@ export const profile = {
   email: "arnav090404@gmail.com",
   github: "https://github.com/arnavXgupta",
   linkedin: "https://linkedin.com/in/arnav-gupta-a810ba260",
+  x: "https://x.com/_Arnav09_",
+  phone: "+91-7986294705",
+  phoneHref: "tel:+917986294705",
+  whatsapp: `https://wa.me/917986294705?text=${encodeURIComponent("Hi Arnav, I came across your portfolio and would like to talk about an opportunity.")}`,
+  xHandle: "@_Arnav09_",
   resume: "/Arnav_Gupta_Resume.pdf",
   location: "Punjab, India. Working remote in IST.",
   url: "https://arnavxgupta.vercel.app",
@@ -86,25 +91,28 @@ export type Project = {
   built: string[];
   stack: string[];
   links: { label: string; href: string }[];
-  visual: "rag" | "chunks" | "roles" | "fanout" | "match";
+  /** Shown in the detail view when there are no public links. */
+  status?: string;
+  visual: "rag" | "chunks" | "roles" | "fanout" | "listings";
 };
 
 export const projects: Project[] = [
   {
-    slug: "cognivia",
-    name: "Cognivia",
-    tagline: "An e-learning platform that reads your material and teaches it back.",
-    year: "2025",
+    slug: "urban-realities",
+    name: "Urban Realities",
+    tagline: "My startup: a rentals and PG discovery portal for Bathinda, with a dashboard for owners and brokers.",
+    year: "2026",
     problem:
-      "Students drown in PDFs and lecture videos. Cognivia turns them into a searchable knowledge base, a personal study plan and a tutor that only answers from your sources.",
+      "Finding a PG or a rental in Bathinda means phone calls and word of mouth. Urban Realities is the startup I'm building to fix that: residential rentals, commercial rentals and PG rooms in one place, with a dashboard where owners and brokers manage their listings.",
     built: [
-      "Ingestion pipeline for 10,000+ documents, covering PDFs and YouTube transcripts.",
-      "RAG over a self-hosted LLaMA model on Ollama, with Pinecone vector search.",
-      "Personalised study plans and a contextual chatbot, behind JWT auth.",
+      "Built the public site and the lister dashboard in ASP.NET Core 8 MVC, on top of two REST APIs.",
+      "Listing rails and filters with a dual-range price slider, wishlists, enquiry forms and WhatsApp contact.",
+      "Moved login and signup to dedicated routes, added per-page SEO tags, and tuned font loading and caching for speed.",
     ],
-    stack: ["Next.js", "FastAPI", "LangChain", "Ollama", "Pinecone", "MongoDB"],
-    links: [{ label: "GitHub", href: "https://github.com/arnavXgupta/Cognivia" }],
-    visual: "rag",
+    stack: ["ASP.NET Core 8", "C#", "Razor", "REST APIs", "JavaScript", "CSS"],
+    links: [],
+    status: "My own startup, in active development. It isn't public yet.",
+    visual: "listings",
   },
   {
     slug: "docuprism",
@@ -135,7 +143,8 @@ export const projects: Project[] = [
       "File sharing through AWS S3 pre-signed URLs and role-based access control.",
     ],
     stack: ["React Native", "Expo", "Fastify", "Socket.IO", "PostgreSQL", "Redis", "AWS S3"],
-    links: [{ label: "Arula web", href: "https://arula-mu.vercel.app" }],
+    links: [],
+    status: "Client work. The app and its code aren't publicly accessible.",
     visual: "roles",
   },
   {
@@ -155,37 +164,65 @@ export const projects: Project[] = [
     visual: "fanout",
   },
   {
-    slug: "intellimatch",
-    name: "IntelliMatch",
-    tagline: "Scores a resume against a job description, 0 to 100.",
+    slug: "cognivia",
+    name: "Cognivia",
+    tagline: "An e-learning platform that reads your material and teaches it back.",
     year: "2025",
     problem:
-      "Applicants rarely know why they get filtered out. IntelliMatch shows the ATS score, the missing skills and the history of every match.",
+      "Students drown in PDFs and lecture videos. Cognivia turns them into a searchable knowledge base, a personal study plan and a tutor that only answers from your sources.",
     built: [
-      "Microservices: a Next.js 14 client, a Spring Boot 3.5 API and a Flask AI service.",
-      "Gemini-powered skill-gap analysis with MongoDB match history.",
-      "Resume storage on AWS S3.",
+      "Ingestion pipeline for 10,000+ documents, covering PDFs and YouTube transcripts.",
+      "RAG over a self-hosted LLaMA model on Ollama, with Pinecone vector search.",
+      "Personalised study plans and a contextual chatbot, behind JWT auth.",
     ],
-    stack: ["Next.js", "Spring Boot", "Flask", "Gemini", "MongoDB", "AWS S3"],
-    links: [{ label: "GitHub", href: "https://github.com/arnavXgupta/IntelliMatch" }],
-    visual: "match",
+    stack: ["Next.js", "FastAPI", "LangChain", "Ollama", "Pinecone", "MongoDB"],
+    links: [{ label: "GitHub", href: "https://github.com/arnavXgupta/Cognivia" }],
+    visual: "rag",
   },
 ];
 
-export type ArchiveItem = { name: string; note: string; stack: string; year: string; repo: string; live?: string };
+export type ArchiveItem = {
+  name: string;
+  note: string;
+  stack: string;
+  year: string;
+  /** Where the row links to. */
+  href: string;
+  /** Public GitHub repo, used for the hover preview card. */
+  repo?: string;
+  live?: string;
+  liveLabel?: string;
+};
 
 export const archive: ArchiveItem[] = [
-  { name: "Ikarus", note: "AI furniture recommendations with an analytics dashboard", stack: "FastAPI, React, Pinecone, Gemini", year: "2025", repo: "Ikarus", live: "https://ikarus-3s4a.vercel.app/" },
-  { name: "YOLO Pothole Detection", note: "Real-time road damage detection, 98%+ accuracy on test data", stack: "YOLOv8, Python", year: "2025", repo: "YOLO-based-Pothole-Detection" },
-  { name: "CUDA Object Detection", note: "YOLOv8 inference on images and video, parallelised with CUDA", stack: "YOLOv8, CUDA", year: "2025", repo: "Object-Detection-CUDA-Optimised" },
-  { name: "Arula", note: "Web frontend for an autism support service", stack: "Next.js, TypeScript", year: "2025", repo: "Arula", live: "https://arula-mu.vercel.app" },
-  { name: "TailorMate", note: "Desktop order, customer and billing manager for tailor shops", stack: "Java, Spring, Maven", year: "2024", repo: "TailorMate" },
-  { name: "Pipecat (fork)", note: "Working fork of the open-source voice AI framework", stack: "Python", year: "2026", repo: "pipecat" },
+  {
+    name: "Hermes Voice Door",
+    note: "Talk to an autonomous agent that builds and edits live websites on Cloudflare Pages",
+    stack: "OpenAI Realtime, WebRTC, Cloudflare Workers, Node.js",
+    year: "2026",
+    href: "https://github.com/arnavXgupta/Hermes-voice-door",
+    repo: "Hermes-voice-door",
+  },
+  {
+    name: "YT Shorts Pipeline",
+    note: "Automated pipeline that produces and publishes Shorts for the @NofaceXAI channel",
+    stack: "AI content automation",
+    year: "2026",
+    href: "https://www.youtube.com/@NofaceXAI",
+  },
+  { name: "TailorMate", note: "Desktop order, customer and billing manager for tailor shops", stack: "Java, Spring, Maven", year: "2024", href: "https://github.com/arnavXgupta/TailorMate", repo: "TailorMate" },
 ];
+
+/** Frontend-only sites, shown together on one line under the archive rows. */
+export const frontendBuilds = [
+  { name: "Arula", note: "Autism support service", href: "https://arula-mu.vercel.app", domain: "arula-mu.vercel.app" },
+  { name: "gNext Biofuel", note: "Biomass pellet manufacturer, Bathinda", href: "https://gnextbiofuel.com", domain: "gnextbiofuel.com" },
+  { name: "Lakshika Bansal", note: "Tarot readings, Next.js and Three.js", href: "https://lakshikabansal.vercel.app", domain: "lakshikabansal.vercel.app" },
+] as const;
 
 export const skillGroups = [
   { title: "AI and LLM", items: ["Pipecat", "LangChain", "OpenAI API", "Gemini API", "Ollama", "Composio", "RAG", "Embeddings", "Voice AI"] },
-  { title: "Backend", items: ["Python", "FastAPI", "Fastify", "Node.js", "Flask", "Spring Boot", "Java"] },
+  { title: "Backend", items: ["Python", "FastAPI", "Fastify", "Node.js", "Flask", "Spring Boot", "Java", "C#", "ASP.NET Core"] },
   { title: "Frontend and mobile", items: ["TypeScript", "React", "Next.js", "Tailwind CSS", "React Native", "Expo", "Zustand"] },
   { title: "Data and infra", items: ["PostgreSQL", "MongoDB", "Redis", "Pinecone", "Supabase", "AWS S3", "Docker", "Socket.IO"] },
   { title: "ML and vision", items: ["YOLOv8", "CUDA", "OpenCV", "Scikit-learn", "NumPy", "Pandas", "NLTK"] },
