@@ -1,86 +1,26 @@
 import { ImageResponse } from "next/og";
-import { RESUME_DATA } from "../data/resume-data";
 
-export const runtime = "edge";
-
-export const alt = "Minimalist Resume";
-export const size = {
-  width: 1200,
-  height: 630,
-};
-
+export const alt = "Arnav Gupta, AI and full-stack engineer. Full-stack engineer with an AI edge.";
+export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default async function Image() {
+export default function OpengraphImage() {
   return new ImageResponse(
-    <div
-      style={{
-        background: "white",
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontFamily: '"Inter"',
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-        }}
-      >
-        {/* biome-ignore lint/performance/noImgElement: ImageResponse context requires img element */}
-        <img
-          src={RESUME_DATA.avatarUrl}
-          alt={RESUME_DATA.name}
-          style={{
-            width: "150px",
-            height: "150px",
-            borderRadius: "10%",
-            marginBottom: "2rem",
-          }}
-        />
-        <div
-          style={{
-            fontSize: "3rem",
-            fontWeight: "bold",
-            color: "#333",
-            marginBottom: "1rem",
-          }}
-        >
-          {RESUME_DATA.name}
+    (
+      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", background: "#09090b", color: "#ececef", padding: 80, position: "relative" }}>
+        <div style={{ position: "absolute", right: -120, top: 60, width: 560, height: 560, borderRadius: 999, background: "radial-gradient(circle, rgba(62,224,164,0.55), rgba(62,224,164,0.08) 55%, transparent 70%)" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 18, fontSize: 28, color: "#a1a1aa" }}>
+          <div style={{ width: 56, height: 56, borderRadius: 999, background: "#ececef", color: "#09090b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, fontWeight: 700 }}>AG</div>
+          Arnav Gupta, AI and Full-Stack Engineer
         </div>
-        <div
-          style={{
-            fontSize: "1.5rem",
-            color: "#666",
-            maxWidth: "600px",
-            lineHeight: "1.4",
-          }}
-        >
-          {RESUME_DATA.about}
-        </div>
-        <div
-          style={{
-            display: "flex",
-            marginTop: "2rem",
-            gap: "1rem",
-          }}
-        >
-          {RESUME_DATA.contact.email && (
-            <div style={{ fontSize: "1rem", color: "#666" }}>
-              {RESUME_DATA.personalWebsiteUrl}
-            </div>
-          )}
+        <div style={{ display: "flex", flexDirection: "column", fontSize: 76, fontWeight: 700, letterSpacing: -3, lineHeight: 1.04 }}>
+          <span>Full-stack engineer</span>
+          <span style={{ display: "flex", gap: 20 }}>
+            with an <span style={{ color: "#3ee0a4" }}>AI edge.</span>
+          </span>
         </div>
       </div>
-    </div>,
-    {
-      ...size,
-    }
+    ),
+    size,
   );
 }

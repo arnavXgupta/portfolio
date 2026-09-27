@@ -1,80 +1,445 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71.4% 4.1%;
+/*
+  Design tokens. The page is dark by design: every ThreeUI shader it hosts is authored
+  for a dark canvas, so the theme is locked rather than following prefers-color-scheme.
+  One accent (emerald signal). Radius system: panels 20px, interactive = full pill.
+*/
+:root {
+  --bg: #09090b;
+  --panel: #0e0e11;
+  --raised: #141418;
+  --line: rgb(255 255 255 / 0.08);
+  --line-strong: rgb(255 255 255 / 0.14);
+  --fg: #ececef;
+  --muted: #a1a1aa;
+  --faint: #7c7c85;
+  --accent: #3ee0a4;
+  --accent-soft: rgb(62 224 164 / 0.14);
+  --accent-ink: #03160e;
 
-    --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
+  /* z-index scale, documented in one place */
+  --z-nav: 40;
+  --z-toast: 45;
+  --z-modal: 50;
+  --z-grain: 55;
+  --z-loader: 60;
+  --z-cursor: 70;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
+  color-scheme: dark;
+}
 
-    --primary: 220.9 39.3% 11%;
-    --primary-foreground: 210 20% 98%;
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --radius-panel: 20px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
+html {
+  background: var(--bg);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
 
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220.9 39.3% 11%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
-
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 224 71.4% 4.1%;
-
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
-
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
-
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 210 20% 98%;
-
-    --primary: 210 20% 98%;
-    --primary-foreground: 220.9 39.3% 11%;
-
-    --secondary: 215 27.9% 16.9%;
-    --secondary-foreground: 210 20% 98%;
-
-    --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
-
-    --accent: 215 27.9% 16.9%;
-    --accent-foreground: 210 20% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 98%;
-
-    --border: 215 27.9% 16.9%;
-    --input: 215 27.9% 16.9%;
-    --ring: 216 12.2% 83.9%;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 999px;
+}
+
+section[id] {
+  scroll-margin-top: 88px;
+}
+
+/* The custom cursor (components/ui/CustomCursor.tsx) replaces the system one only while it is mounted. */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+
+/* Film grain on a fixed, non-interactive layer only (never on scrolling containers). */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-grain);
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Host for the vendored ThreeUI canvases (replaces .threeui-background). */
+.threeui-canvas-host {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.threeui-canvas-host > canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Typography vortex: keep vertical page scrolling working on touch screens. */
+.typography-vortex {
+  position: absolute;
+  inset: 0;
+  touch-action: pan-y;
+  cursor: crosshair;
+}
+
+.typography-vortex > canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Boot loader: hidden before first paint for returning visitors (see layout.tsx). */
+html[data-booted] .boot-overlay {
+  display: none;
+}
+
+/* Logo marquee (the only marquee on the page). */
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
-.print-force-new-page {
-  page-break-before: always;
+.marquee-track {
+  animation: marquee 48s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* Spotlight border used by the bento tiles; --mx/--my are written from pointer events. */
+.spotlight {
+  --mx: 50%;
+  --my: 50%;
+}
+
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgb(62 224 164 / 0.55), transparent 42%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out-expo);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(520px circle at var(--mx) var(--my), rgb(62 224 164 / 0.07), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.spotlight:hover::before,
+.spotlight:hover::after,
+.spotlight:focus-visible::before {
+  opacity: 1;
+}
+
+.mask-fade-x {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background: var(--raised) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/*
+  ThreeUI Community "Liquid Metal Button", ported from its iframe document (see
+  src/threeui/liquid-metal-button). Units follow the original 1407 x 516 reference,
+  scaled from --h. The stage is larger than the pill so the bloom is never cut off,
+  and it never takes pointer events.
+*/
+.lm-host {
+  --u: calc(var(--h) / 516);
+  --pad: calc(900 * var(--u));
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  width: var(--bw);
+  height: var(--h);
+  isolation: isolate;
+}
+
+.lm-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--bw) + 2 * var(--pad));
+  height: calc(var(--h) + 2 * var(--pad));
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lm-plate {
+  position: absolute;
+  width: var(--bw);
+  height: var(--h);
+  border-radius: 999px;
+  background: #0b0c0e;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.1),
+    0 calc(var(--h) * 0.10) calc(var(--h) * 0.22) rgba(0, 0, 0, 0.72),
+    0 calc(var(--h) * 0.30) calc(var(--h) * 0.66) rgba(0, 0, 0, 0.62);
+  transition: box-shadow 0.38s cubic-bezier(0.22, 0.61, 0.36, 1), background 0.38s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.lm-host.hot .lm-plate {
+  background: #08090a;
+  box-shadow:
+    0 calc(var(--h) * 0.12) calc(var(--h) * 0.26) rgba(0, 0, 0, 0.8),
+    0 calc(var(--h) * 0.40) calc(var(--h) * 0.86) rgba(0, 0, 0, 0.72);
+}
+
+.lm-host.press .lm-plate {
+  background: #070809;
+  transition-duration: 0.1s;
+}
+
+.lm-fx {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.lm-btn {
+  position: relative;
+  z-index: 1;
+  width: var(--bw);
+  height: var(--h);
+  border: 0;
+  background: none;
+  padding: 0;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(88 * var(--u));
+  color: #fff;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: calc(190 * var(--u));
+  line-height: 1;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lm-btn:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.6);
+  outline-offset: 4px;
+}
+
+.lm-ico {
+  display: block;
+  flex: none;
+  width: calc(100 * var(--u));
+  height: calc(100 * var(--u));
+}
+
+.lm-ico svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.lm-lbl {
+  display: block;
+  transform: translateY(calc(2 * var(--u)));
+}
+
+/*
+  ThreeUI Community "Animated Top Dock", sable theme (the first variant). Materials and
+  sizes are the original's; the spring lives in src/threeui/animated-top-dock. Items are
+  real links, and the section in view gets the pressed (light) state.
+*/
+.sable-dock {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: flex;
+  align-items: flex-start;
+  gap: 3px;
+  height: 38px;
+  padding: 4px;
+  overflow: visible;
+  border: 1px solid #292929;
+  border-radius: 11px;
+  background: rgba(14, 14, 14, 0.86);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.48), inset 0 1px rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(18px) saturate(75%);
+  -webkit-backdrop-filter: blur(18px) saturate(75%);
+  transform: translateX(-50%);
+  isolation: isolate;
+}
+
+.sable-dock__item {
+  position: relative;
+  z-index: 6;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  outline: none;
+  color: #858580;
+  background: rgba(21, 21, 20, 0.9);
+  font: 400 10px/1 var(--font-geist-mono), ui-monospace, monospace;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  backdrop-filter: blur(14px) saturate(70%);
+  transform-origin: 50% 0;
+  transition: color 0.15s, border-color 0.18s, background 0.18s, box-shadow 0.18s;
+  will-change: width, height, transform;
+  cursor: pointer;
+}
+
+.sable-dock__item[data-dock-near="true"],
+.sable-dock__item:focus-visible {
+  z-index: 7;
+  color: #ecece8;
+  border-color: #41413e;
+  background: rgba(27, 27, 26, 0.94);
+  box-shadow: 0 7px 16px rgba(0, 0, 0, 0.26);
+}
+
+.sable-dock__link {
+  gap: 6px;
+  min-width: 94px;
+  padding: 0 10px;
+}
+
+.sable-dock__link[aria-current="true"] {
+  color: #111;
+  border-color: #e8e8e3;
+  background: #e8e8e3;
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.28);
+}
+
+.sable-dock__link--accent {
+  color: var(--accent);
+}
+
+.sable-dock__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  opacity: 0.62;
+  transition: opacity 0.16s;
+}
+
+.sable-dock__icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sable-dock__item[data-dock-near="true"] .sable-dock__icon,
+.sable-dock__item:focus-visible .sable-dock__icon,
+.sable-dock__link[aria-current="true"] .sable-dock__icon {
+  opacity: 1;
+}
+
+/* Mobile bar in the same materials */
+.sable-bar {
+  height: 50px;
+  padding: 6px 6px 6px 10px;
+  border: 1px solid #292929;
+  border-radius: 13px;
+  background: rgba(14, 14, 14, 0.86);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.48), inset 0 1px rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(18px) saturate(75%);
+  -webkit-backdrop-filter: blur(18px) saturate(75%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sable-dock__item {
+    transform: none !important;
+  }
 }

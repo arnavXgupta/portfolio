@@ -1,106 +1,58 @@
-import { Analytics } from "@vercel/analytics/react";
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
-import Script from "next/script";
-
+import { Geist, Geist_Mono } from "next/font/google";
+import { IntroProvider } from "@/components/IntroProvider";
+import { CustomCursor } from "@/components/ui/CustomCursor";
+import { profile } from "@/content/site";
 import "./globals.css";
-import type React from "react";
-import { ErrorBoundary } from "@/components/error-boundary";
-import { RESUME_DATA } from "@/data/resume-data";
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-});
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+
+const description =
+  "Arnav Gupta is an AI engineer and full-stack engineer at GetHelpDesk.ai. He builds LLM systems, RAG pipelines, backends and the products around them with Python, FastAPI, TypeScript and Next.js.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://arnavxgupta.vercel.app/"),
-  title: {
-    default: `${RESUME_DATA.name} - ${RESUME_DATA.about}`,
-    template: `%s | ${RESUME_DATA.name}`,
-  },
-  description: RESUME_DATA.about,
-  keywords: [
-    "resume",
-    "cv",
-    "portfolio",
-    RESUME_DATA.name,
-    "software engineer",
-    "full stack developer",
-    "react",
-    "next.js",
-    "typescript",
-  ],
-  authors: [{ name: RESUME_DATA.name }],
-  creator: RESUME_DATA.name,
-  publisher: RESUME_DATA.name,
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: RESUME_DATA.personalWebsiteUrl,
-    siteName: `${RESUME_DATA.name}'s CV`,
-    title: `${RESUME_DATA.name} - ${RESUME_DATA.about}`,
-    description: RESUME_DATA.about,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  alternates: {
-    canonical: RESUME_DATA.personalWebsiteUrl,
-  },
+  metadataBase: new URL(profile.url),
+  title: { default: "Arnav Gupta, AI and Full-Stack Engineer", template: "%s | Arnav Gupta" },
+  description,
+  authors: [{ name: profile.name, url: profile.url }],
+  keywords: ["Arnav Gupta", "AI engineer", "full-stack engineer", "backend engineer", "LLM", "RAG", "FastAPI", "Next.js", "TypeScript", "portfolio"],
+  openGraph: { title: "Arnav Gupta, AI and Full-Stack Engineer", description, url: profile.url, siteName: "Arnav Gupta", type: "website" },
+  twitter: { card: "summary_large_image", title: "Arnav Gupta, AI and Full-Stack Engineer", description },
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 5,
+  themeColor: "#09090b",
+  colorScheme: "dark",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+// Runs before first paint: returning visitors (this session) and reduced-motion users
+// skip the boot loader, so they never see it flash.
+const bootScript = `try{if(sessionStorage.getItem("ag-booted")||matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.dataset.booted="1"}}catch(e){document.documentElement.dataset.booted="1"}`;
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  jobTitle: "Software Engineer",
+  worksFor: { "@type": "Organization", name: "GetHelpDesk.ai" },
+  alumniOf: { "@type": "CollegeOrUniversity", name: "Thapar Institute of Engineering & Technology" },
+  url: profile.url,
+  email: `mailto:${profile.email}`,
+  sameAs: [profile.github, profile.linkedin],
+};
+
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
       <head>
-        {/* Google Analytics */}
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=G-560BJFGF6F`}
-          strategy="afterInteractive"
-        />
-        <Script id="ga-script" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-560BJFGF6F', {
-              page_path: window.location.pathname,
-            });
-          `}
-        </Script>
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
       </head>
       <body>
-        <ErrorBoundary>{children}</ErrorBoundary>
+        <IntroProvider>{children}</IntroProvider>
+        <CustomCursor />
       </body>
-      <Analytics />
     </html>
   );
 }
