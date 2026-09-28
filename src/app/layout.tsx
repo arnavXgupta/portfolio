@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
@@ -12,6 +13,10 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 // Google Analytics 4 measurement ID; <GoogleAnalytics> injects the gtag.js snippet.
 const GA_ID = "G-GR70RCG708";
+
+// Microsoft Clarity project (heatmaps and session recordings).
+const CLARITY_ID = "ype95t014i";
+const clarityScript = `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_ID}");`;
 
 const title = "Arnav Gupta, AI and Full-Stack Engineer";
 const description =
@@ -99,6 +104,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <IntroProvider>{children}</IntroProvider>
         <CustomCursor />
         <Analytics />
+        <Script id="microsoft-clarity" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: clarityScript }} />
       </body>
       <GoogleAnalytics gaId={GA_ID} />
     </html>
