@@ -10,8 +10,8 @@ import "./globals.css";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
-// Google Analytics 4 property carried over from the previous site.
-const GA_ID = "G-560BJFGF6F";
+// Google Analytics 4 measurement ID; <GoogleAnalytics> injects the gtag.js snippet.
+const GA_ID = "G-GR70RCG708";
 
 const title = "Arnav Gupta, AI and Full-Stack Engineer";
 const description =
