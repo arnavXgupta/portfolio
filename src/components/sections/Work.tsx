@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState, type PointerEvent } from "rea
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectVisual } from "@/components/visuals/ProjectVisuals";
 import { projects, type Project } from "@/content/site";
+import { trackProjectOpen } from "@/lib/analytics";
 
 const SPANS: Record<string, { cell: string; visual: string }> = {
   "urban-realities": { cell: "md:col-span-2 lg:col-span-4 lg:row-span-2", visual: "min-h-[300px] md:min-h-[340px] lg:min-h-[420px]" },
@@ -170,6 +171,7 @@ export function Work() {
                   lastOpened.current = item.slug;
                   setOpened((previous) => new Set(previous).add(item.slug));
                   setSelected(item.slug);
+                  trackProjectOpen(item.slug, item.name);
                 }}
               />
             )}

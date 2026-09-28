@@ -9,6 +9,7 @@ import { LiquidMetalButton } from "@/threeui/liquid-metal-button/LiquidMetalButt
 import { Reveal } from "@/components/ui/Reveal";
 import { ParticleWordmark } from "@/components/visuals/ParticleWordmark";
 import { profile } from "@/content/site";
+import { trackContactClick, trackEmailCopy } from "@/lib/analytics";
 
 const EmeraldHorizonBackground = dynamic(() => import("@/threeui/emerald-horizon/EmeraldHorizonBackground").then((m) => m.EmeraldHorizonBackground), { ssr: false });
 
@@ -29,6 +30,7 @@ function CopyEmail() {
     try {
       await navigator.clipboard.writeText(profile.email);
       setState("copied");
+      trackEmailCopy();
     } catch {
       setState("failed");
     }
@@ -78,7 +80,9 @@ export function Contact() {
         </Reveal>
 
         <Reveal delay={0.1} className="mt-10 flex flex-wrap items-center gap-4">
-          <LiquidMetalButton href={`mailto:${profile.email}`}>Get in touch</LiquidMetalButton>
+          <LiquidMetalButton href={`mailto:${profile.email}`} onClick={() => trackContactClick("email", "contact_section")}>
+            Get in touch
+          </LiquidMetalButton>
           <CopyEmail />
           <div className="flex gap-2">
             {SOCIALS.map(({ label, href, Icon }) => (
@@ -87,6 +91,7 @@ export function Contact() {
                 href={href}
                 target="_blank"
                 rel="noreferrer"
+                onClick={href === profile.whatsapp ? () => trackContactClick("whatsapp", "contact_section") : undefined}
                 aria-label={label}
                 title={label}
                 className="grid size-12 place-items-center rounded-full border border-line-strong bg-bg/40 text-fg backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:text-accent"
@@ -97,7 +102,7 @@ export function Contact() {
           </div>
         </Reveal>
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
-          <a href={profile.phoneHref} className="inline-flex items-center gap-2 font-mono text-fg transition-colors hover:text-accent">
+          <a href={profile.phoneHref} onClick={() => trackContactClick("call", "contact_section")} className="inline-flex items-center gap-2 font-mono text-fg transition-colors hover:text-accent">
             <PhoneCallIcon size={16} className="text-accent" />
             {profile.phone}
           </a>

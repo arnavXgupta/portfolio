@@ -8,7 +8,7 @@
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 
 type Common = { children: ReactNode; icon?: ReactNode; height?: number; className?: string; ariaLabel?: string };
-type LinkProps = Common & { href: string; target?: string; rel?: string; onClick?: never };
+type LinkProps = Common & { href: string; target?: string; rel?: string; onClick?: () => void };
 type ButtonProps = Common & { onClick: () => void; href?: never; target?: never; rel?: never };
 
 const ArrowIcon = (
@@ -71,7 +71,7 @@ export function LiquidMetalButton(props: LinkProps | ButtonProps) {
         <canvas ref={canvasRef} className="lm-fx" />
       </span>
       {"href" in props && props.href ? (
-        <a ref={buttonRef} className="lm-btn" href={props.href} target={props.target} rel={props.rel} aria-label={ariaLabel}>
+        <a ref={buttonRef} className="lm-btn" href={props.href} target={props.target} rel={props.rel} onClick={props.onClick} aria-label={ariaLabel}>
           {content}
         </a>
       ) : (

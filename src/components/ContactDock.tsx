@@ -5,8 +5,9 @@ import { PhoneCallIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
 import type { ReactNode } from "react";
 import { useIntro } from "./IntroProvider";
 import { profile } from "@/content/site";
+import { trackContactClick, type ContactMethod } from "@/lib/analytics";
 
-function DockButton({ href, label, detail, primary, children, delay }: { href: string; label: string; detail: string; primary?: boolean; children: ReactNode; delay: number }) {
+function DockButton({ href, label, detail, method, primary, children, delay }: { href: string; label: string; detail: string; method: ContactMethod; primary?: boolean; children: ReactNode; delay: number }) {
   const reduce = useReducedMotion();
   const { ready } = useIntro();
   return (
@@ -14,6 +15,7 @@ function DockButton({ href, label, detail, primary, children, delay }: { href: s
       href={href}
       target={href.startsWith("http") ? "_blank" : undefined}
       rel={href.startsWith("http") ? "noreferrer" : undefined}
+      onClick={() => trackContactClick(method, "contact_dock")}
       aria-label={`${label}: ${detail}`}
       className="group relative flex items-center justify-end"
       initial={reduce ? false : { opacity: 0, y: 16, scale: 0.8 }}
@@ -39,10 +41,10 @@ function DockButton({ href, label, detail, primary, children, delay }: { href: s
 export function ContactDock() {
   return (
     <nav aria-label="Quick contact" className="fixed bottom-4 right-4 flex flex-col items-end gap-3 md:bottom-6 md:right-6" style={{ zIndex: "var(--z-nav)" }}>
-      <DockButton href={profile.whatsapp} label="WhatsApp" detail={profile.phone} primary delay={0.9}>
+      <DockButton href={profile.whatsapp} label="WhatsApp" detail={profile.phone} method="whatsapp" primary delay={0.9}>
         <WhatsappLogoIcon size={24} weight="fill" />
       </DockButton>
-      <DockButton href={profile.phoneHref} label="Call" detail={profile.phone} delay={1}>
+      <DockButton href={profile.phoneHref} label="Call" detail={profile.phone} method="call" delay={1}>
         <PhoneCallIcon size={21} />
       </DockButton>
     </nav>
